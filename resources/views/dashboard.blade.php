@@ -66,10 +66,19 @@
                 <span class="inline-block text-xs font-bold text-blue-600">Segera Hadir &rarr;</span>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h3 class="font-bold text-slate-800 mb-1">Profil Akun</h3>
-                <p class="text-xs text-slate-500 mb-4">Email: {{ Auth::user()->email }}</p>
-                <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Akun Terverifikasi</span>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-1">Profil Akun</h3>
+                    <p class="text-xs text-slate-500 mb-2">Email: {{ Auth::user()->email }}</p>
+                    <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Akun Terverifikasi</span>
+                </div>
+                @if(Auth::user()->role === 'mahasiswa')
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <a href="{{ route('mahasiswa.profil') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
+                            Kelola Profil & CV &rarr;
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </main>

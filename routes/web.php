@@ -24,6 +24,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // M2: Profil Mahasiswa & Kelola CV (F-04, F-05, F-06)
+    Route::get('/mahasiswa/profil', function () {
+        $user = Auth::user();
+        if ($user->role !== 'mahasiswa') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ini khusus untuk peran mahasiswa.');
+        }
+
+        // Buat atau ambil API token Sanctum untuk integrasi REST API
+        $token = $user->createToken('web-session-' . $user->id)->plainTextToken;
+
+        return view('mahasiswa.profil', [
+            'apiToken' => $token,
+            'user' => $user,
+        ]);
+    })->name('mahasiswa.profil');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
