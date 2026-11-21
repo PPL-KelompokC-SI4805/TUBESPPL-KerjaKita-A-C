@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class PenyediaProfile extends Model
 {
     protected $table = 'penyedia_profiles';
-    protected $guarded = ['id'];
+
+    protected $fillable = [
+        'user_id',
+        'nama_organisasi',
+        'bidang_usaha',
+        'deskripsi',
+        'alamat',
+        'kota',
+        'website',
+        'kontak',
+        'logo_path',
+    ];
 
     public function user()
     {
