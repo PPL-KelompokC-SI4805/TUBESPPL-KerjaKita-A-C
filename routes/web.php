@@ -40,6 +40,36 @@ Route::middleware('auth')->group(function () {
             'user' => $user,
         ]);
     })->name('mahasiswa.profil');
+
+    // M5: Pencarian & Detail Lowongan Mahasiswa (F-13, F-14)
+    Route::get('/mahasiswa/lowongan', function () {
+        $user = Auth::user();
+        if ($user->role !== 'mahasiswa') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ini khusus untuk peran mahasiswa.');
+        }
+
+        $token = $user->createToken('web-session-' . $user->id)->plainTextToken;
+
+        return view('mahasiswa.lowongan', [
+            'apiToken' => $token,
+            'user' => $user,
+        ]);
+    })->name('mahasiswa.lowongan');
+
+    // M5: Lowongan Tersimpan (F-15)
+    Route::get('/mahasiswa/lowongan-tersimpan', function () {
+        $user = Auth::user();
+        if ($user->role !== 'mahasiswa') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ini khusus untuk peran mahasiswa.');
+        }
+
+        $token = $user->createToken('web-session-' . $user->id)->plainTextToken;
+
+        return view('mahasiswa.lowongan_tersimpan', [
+            'apiToken' => $token,
+            'user' => $user,
+        ]);
+    })->name('mahasiswa.lowongan_tersimpan');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -13,4 +13,9 @@ class PenyediaProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function lowongan()
+    {
+        return $this->hasMany(Lowongan::class, 'penyedia_id');
+    }
 }
