@@ -37,4 +37,20 @@ class MahasiswaProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Relasi hasMany ke LowonganTersimpan (1:N)
+     */
+    public function lowonganTersimpan()
+    {
+        return $this->hasMany(LowonganTersimpan::class, 'mahasiswa_id');
+    }
+
+    /**
+     * Relasi hasMany ke Lamaran (1:N)
+     */
+    public function lamaran()
+    {
+        return $this->hasMany(Lamaran::class, 'mahasiswa_id');
+    }
 }

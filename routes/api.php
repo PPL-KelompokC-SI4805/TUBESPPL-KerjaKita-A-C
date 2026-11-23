@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaProfileController;
+use App\Http\Controllers\LowonganController;
+use App\Http\Controllers\LowonganTersimpanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // F-06: Hapus CV
         Route::delete('/profile/cv', [MahasiswaProfileController::class, 'deleteCv']);
+
+        // ─── Pencarian Lowongan (M5: F-13, F-14) ─────────────────
+        Route::get('/lowongan', [LowonganController::class, 'index']);
+        Route::get('/lowongan/categories', [LowonganController::class, 'categories']);
+        Route::get('/lowongan/{id}', [LowonganController::class, 'show']);
+
+        // ─── Lowongan Tersimpan (M5: F-15) ──────────────────────
+        Route::get('/lowongan-tersimpan', [LowonganTersimpanController::class, 'index']);
+        Route::post('/lowongan-tersimpan', [LowonganTersimpanController::class, 'store']);
+        Route::put('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'update']);
+        Route::delete('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'destroy']);
     });
 
 });
