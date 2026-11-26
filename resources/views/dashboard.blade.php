@@ -114,6 +114,12 @@
                             Kelola Profil & CV &rarr;
                         </a>
                     </div>
+                     @else
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <a href="{{ route('penyedia.profil') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
+                            Kelola Profil Organisasi &rarr;
+                        </a>
+                    </div>
                 @endif
             </div>
         </div>

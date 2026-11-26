@@ -41,6 +41,22 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('mahasiswa.profil');
 
+     // M3: Profil Penyedia & Kelola Logo (F-07, F-08, F-09)
+    Route::get('/penyedia/profil', function () {
+        $user = Auth::user();
+        if ($user->role !== 'penyedia') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ini khusus untuk peran penyedia.');
+        }
+
+        // Buat API token Sanctum untuk integrasi REST API
+        $token = $user->createToken('web-session-' . $user->id)->plainTextToken;
+
+        return view('penyedia.profil', [
+            'apiToken' => $token,
+            'user' => $user,
+        ]);
+    })->name('penyedia.profil');
+
     // M5: Pencarian & Detail Lowongan Mahasiswa (F-13, F-14)
     Route::get('/mahasiswa/lowongan', function () {
         $user = Auth::user();
