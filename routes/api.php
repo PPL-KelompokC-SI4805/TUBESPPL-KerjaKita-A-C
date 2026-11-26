@@ -6,16 +6,8 @@ use App\Http\Controllers\MahasiswaProfileController;
 use App\Http\Controllers\PenyediaProfileController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\LowonganTersimpanController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes — KerjaKita
-|--------------------------------------------------------------------------
-|
-| Semua route di file ini otomatis mendapat prefix /api.
-| Autentikasi menggunakan Laravel Sanctum (token-based).
-|
-*/
+use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\PelamarController;
 
 // ─── Route yang memerlukan autentikasi (Sanctum) ─────────────────────
 Route::middleware('auth:sanctum')->group(function () {
@@ -46,9 +38,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/lowongan-tersimpan', [LowonganTersimpanController::class, 'store']);
         Route::put('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'update']);
         Route::delete('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'destroy']);
+
+        // ─── Lamaran Mahasiswa (M6) ─────────────────────────────
+        Route::get('/lamaran', [LamaranController::class, 'index']);
+        Route::post('/lamaran', [LamaranController::class, 'store']);
+        Route::get('/lamaran/{id}', [LamaranController::class, 'show']);
+        Route::put('/lamaran/{id}', [LamaranController::class, 'update']);
+        Route::delete('/lamaran/{id}', [LamaranController::class, 'destroy']);
     });
-    
-     // ─── Profil Penyedia (M3: F-07, F-08, F-09) ──────────────────
+
+    // ─── Profil Penyedia (M3: F-07, F-08, F-09) ──────────────────
     // Hanya pengguna dengan role 'penyedia' yang dapat mengakses.
     Route::middleware('role:penyedia')->prefix('penyedia')->group(function () {
 
@@ -63,9 +62,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // F-09: Hapus logo
         Route::delete('/profile/logo', [PenyediaProfileController::class, 'deleteLogo']);
+
+        // ─── Daftar Pelamar Lowongan (M6) ───────────────────────
+        Route::get('/lowongan/{id}/pelamar', [PelamarController::class, 'index']);
     });
 
 });
-
-
-
