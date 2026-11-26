@@ -36,17 +36,25 @@
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-8">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group">
                         <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition">
                             KK
                         </div>
                         <span class="font-extrabold text-xl tracking-tight text-slate-900">KerjaKita</span>
                     </a>
-                    <span class="text-slate-300">|</span>
-                    <a href="{{ route('dashboard') }}" class="text-xs font-semibold text-slate-500 hover:text-blue-600 transition flex items-center gap-1">
-                        &larr; Kembali ke Dashboard
-                    </a>
+
+                    <div class="hidden md:flex items-center gap-1">
+                        <a href="{{ route('mahasiswa.lowongan') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
+                            Cari Lowongan
+                        </a>
+                        <a href="{{ route('mahasiswa.lowongan_tersimpan') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
+                            Lowongan Tersimpan
+                        </a>
+                        <a href="{{ route('mahasiswa.profil') }}" class="px-3 py-2 text-sm font-bold text-blue-600 border-b-2 border-blue-600 transition">
+                            Profil Mahasiswa
+                        </a>
+                    </div>
                 </div>
 
                 <div class="flex items-center gap-4">

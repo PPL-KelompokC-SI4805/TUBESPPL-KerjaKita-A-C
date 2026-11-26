@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaProfileController;
+use App\Http\Controllers\PenyediaProfileController;
+use App\Http\Controllers\LowonganController;
+use App\Http\Controllers\LowonganTersimpanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +35,37 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // F-06: Hapus CV
         Route::delete('/profile/cv', [MahasiswaProfileController::class, 'deleteCv']);
+
+        // ─── Pencarian Lowongan (M5: F-13, F-14) ─────────────────
+        Route::get('/lowongan', [LowonganController::class, 'index']);
+        Route::get('/lowongan/categories', [LowonganController::class, 'categories']);
+        Route::get('/lowongan/{id}', [LowonganController::class, 'show']);
+
+        // ─── Lowongan Tersimpan (M5: F-15) ──────────────────────
+        Route::get('/lowongan-tersimpan', [LowonganTersimpanController::class, 'index']);
+        Route::post('/lowongan-tersimpan', [LowonganTersimpanController::class, 'store']);
+        Route::put('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'update']);
+        Route::delete('/lowongan-tersimpan/{id}', [LowonganTersimpanController::class, 'destroy']);
+    });
+    
+     // ─── Profil Penyedia (M3: F-07, F-08, F-09) ──────────────────
+    // Hanya pengguna dengan role 'penyedia' yang dapat mengakses.
+    Route::middleware('role:penyedia')->prefix('penyedia')->group(function () {
+
+        // F-07: Melihat profil organisasi
+        Route::get('/profile', [PenyediaProfileController::class, 'show']);
+
+        // F-08: Mengubah profil organisasi
+        Route::put('/profile', [PenyediaProfileController::class, 'update']);
+
+        // F-09: Unggah / ganti logo
+        Route::post('/profile/logo', [PenyediaProfileController::class, 'uploadLogo']);
+
+        // F-09: Hapus logo
+        Route::delete('/profile/logo', [PenyediaProfileController::class, 'deleteLogo']);
     });
 
 });
+
+
+
