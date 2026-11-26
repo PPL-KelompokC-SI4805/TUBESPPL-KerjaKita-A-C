@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LowonganController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -40,6 +41,36 @@ Route::middleware('auth')->group(function () {
             'user' => $user,
         ]);
     })->name('mahasiswa.profil');
+
+
+        // M4: Manajemen Lowongan (F-10, F-11, F-12)
+        Route::middleware('role:penyedia')->prefix('penyedia')->name('penyedia.')->group(function () {
+
+            Route::get('/lowongan', [LowonganController::class, 'index'])
+                ->name('lowongan.index');
+
+            Route::get('/lowongan/tambah', [LowonganController::class, 'create'])
+                ->name('lowongan.create');
+
+            Route::post('/lowongan', [LowonganController::class, 'store'])
+                ->name('lowongan.store');
+
+            Route::get('/lowongan/{id}', [LowonganController::class, 'show'])
+                ->name('lowongan.show');
+
+            Route::get('/lowongan/{id}/edit', [LowonganController::class, 'edit'])
+                ->name('lowongan.edit');
+
+            Route::put('/lowongan/{id}', [LowonganController::class, 'update'])
+                ->name('lowongan.update');
+            
+            Route::patch('/lowongan/{id}/status', [LowonganController::class, 'toggleStatus'])
+                ->name('lowongan.toggle-status');
+
+            Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy'])
+              ->name('lowongan.destroy');
+        });
+
 
      // M3: Profil Penyedia & Kelola Logo (F-07, F-08, F-09)
     Route::get('/penyedia/profil', function () {
