@@ -116,4 +116,54 @@ class MahasiswaProfileController extends Controller
             ], 404);
         }
     }
+
+    // ─────────────────────────────────────────────────────────────
+    //  F-19 (PBI-19) : Unggah / Ganti Transkrip Nilai PDF
+    //  POST /api/mahasiswa/profile/transkrip
+    // ─────────────────────────────────────────────────────────────
+    public function uploadTranskrip(Request $request): JsonResponse
+    {
+        $request->validate([
+            'transkrip' => ['required', 'file', 'mimes:pdf', 'max:2048'],
+        ], [
+            'transkrip.required' => 'Berkas transkrip nilai wajib dipilih.',
+            'transkrip.mimes'    => 'Format transkrip nilai harus berupa PDF (.pdf).',
+            'transkrip.max'      => 'Ukuran file transkrip nilai maksimal 2 MB.',
+        ]);
+
+        $result = $this->service->uploadTranskrip($request->user(), $request->file('transkrip'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'File Transkrip Nilai berhasil diunggah.',
+            'data'    => [
+                'transkrip_file_path' => $result['profile']->transkrip_file_path,
+                'transkrip_url'       => $result['transkrip_url'],
+            ],
+        ], 200);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  F-19 (PBI-19) : Hapus Transkrip Nilai PDF
+    //  DELETE /api/mahasiswa/profile/transkrip
+    // ─────────────────────────────────────────────────────────────
+    public function deleteTranskrip(Request $request): JsonResponse
+    {
+        try {
+            $profile = $this->service->deleteTranskrip($request->user());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'File Transkrip Nilai berhasil dihapus.',
+                'data'    => [
+                    'transkrip_file_path' => $profile->transkrip_file_path,
+                ],
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 404);
+        }
+    }
 }

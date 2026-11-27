@@ -23,8 +23,23 @@
                 <a href="{{ route('mahasiswa.lowongan_tersimpan') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
                     Lowongan Tersimpan
                 </a>
+                <a href="{{ route('mahasiswa.lamaran') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
+                    Riwayat Lamaran
+                </a>
                 <a href="{{ route('mahasiswa.profil') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
                     Profil Mahasiswa
+                </a>
+            </div>
+            @else
+            <div class="hidden md:flex items-center gap-2">
+                <a href="{{ route('penyedia.lowongan.index') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
+                    Kelola Lowongan
+                </a>
+                <a href="{{ route('penyedia.lowongan.create') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
+                    + Tambah Lowongan
+                </a>
+                <a href="{{ route('penyedia.profil') }}" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 transition">
+                    Profil Organisasi
                 </a>
             </div>
             @endif
@@ -52,6 +67,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700 font-medium">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Hero Banner -->
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 text-white shadow-lg mb-8">
             <h1 class="text-2xl font-bold mb-2">Selamat Datang di KerjaKita, {{ Auth::user()->name }}!</h1>
@@ -66,62 +87,93 @@
 
         <!-- Ringkasan Menu Utama -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                <div>
-                    <h3 class="font-bold text-slate-800 mb-1">Eksplorasi Lowongan</h3>
-                    <p class="text-xs text-slate-500 mb-4">Lihat daftar posisi magang dan lowongan kerja aktif khusus mahasiswa dengan pencarian dan filter cerdas.</p>
-                </div>
-                @if(Auth::user()->role === 'mahasiswa')
+            @if(Auth::user()->role === 'mahasiswa')
+                <!-- Kartu 1 Mahasiswa: Eksplorasi Lowongan -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Eksplorasi Lowongan</h3>
+                        <p class="text-xs text-slate-500 mb-4">Lihat daftar posisi magang dan lowongan kerja aktif khusus mahasiswa dengan pencarian dan filter cerdas.</p>
+                    </div>
                     <div class="pt-3 border-t border-slate-100">
                         <a href="{{ route('mahasiswa.lowongan') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
                             Cari Lowongan Sekarang &rarr;
                         </a>
                     </div>
-                @else
-                    <span class="inline-block text-xs font-bold text-blue-600">Khusus Mahasiswa</span>
-                @endif
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                <div>
-                    <h3 class="font-bold text-slate-800 mb-1">
-                        {{ Auth::user()->role === 'mahasiswa' ? 'Lowongan Tersimpan' : 'Kelola Pelamar' }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mb-4">
-                        {{ Auth::user()->role === 'mahasiswa' ? 'Kelola arsip minat karir dan catatan preferensi lowongan magang favorit Anda.' : 'Tinjau daftar kandidat mahasiswa yang melamar.' }}
-                    </p>
                 </div>
-                @if(Auth::user()->role === 'mahasiswa')
-                    <div class="pt-3 border-t border-slate-100">
+
+                <!-- Kartu 2 Mahasiswa: Lowongan Tersimpan & Lamaran -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Lowongan Tersimpan & Lamaran</h3>
+                        <p class="text-xs text-slate-500 mb-4">Kelola arsip lowongan favorit serta pantau progres lamaran magang dan kerja yang telah diajukan.</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                         <a href="{{ route('mahasiswa.lowongan_tersimpan') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
-                            Buka Lowongan Tersimpan &rarr;
+                            Tersimpan &rarr;
+                        </a>
+                        <a href="{{ route('mahasiswa.lamaran') }}" class="inline-flex items-center text-xs font-bold text-indigo-600 hover:text-indigo-700 transition">
+                            Riwayat Lamaran &rarr;
                         </a>
                     </div>
-                @else
-                    <span class="inline-block text-xs font-bold text-blue-600">Segera Hadir &rarr;</span>
-                @endif
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                <div>
-                    <h3 class="font-bold text-slate-800 mb-1">Profil Akun</h3>
-                    <p class="text-xs text-slate-500 mb-2">Email: {{ Auth::user()->email }}</p>
-                    <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Akun Terverifikasi</span>
                 </div>
-                @if(Auth::user()->role === 'mahasiswa')
+
+                <!-- Kartu 3 Mahasiswa: Profil Akun -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Profil Akun</h3>
+                        <p class="text-xs text-slate-500 mb-2">Email: {{ Auth::user()->email }}</p>
+                        <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Akun Terverifikasi</span>
+                    </div>
                     <div class="mt-4 pt-3 border-t border-slate-100">
                         <a href="{{ route('mahasiswa.profil') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
                             Kelola Profil & CV &rarr;
                         </a>
                     </div>
-                     @else
+                </div>
+            @else
+                <!-- Kartu 1 Penyedia: Kelola Lowongan (M4: F-10, F-11, F-12) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Kelola Lowongan</h3>
+                        <p class="text-xs text-slate-500 mb-4">Buat lowongan magang atau kerja baru, perbarui detail posisi, dan atur status publikasi lowongan Anda.</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="{{ route('penyedia.lowongan.index') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
+                            Daftar Lowongan &rarr;
+                        </a>
+                        <a href="{{ route('penyedia.lowongan.create') }}" class="inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-700 transition">
+                            + Tambah Lowongan
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kartu 2 Penyedia: Kelola Pelamar (M6: F-17) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Kelola Pelamar</h3>
+                        <p class="text-xs text-slate-500 mb-4">Tinjau daftar kandidat mahasiswa yang melamar, unduh CV, dan kelola seleksi pada setiap lowongan.</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100">
+                        <a href="{{ route('penyedia.lowongan.index') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
+                            Lihat Pelamar per Lowongan &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kartu 3 Penyedia: Profil Organisasi (M3: F-07, F-08, F-09) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">Profil Akun</h3>
+                        <p class="text-xs text-slate-500 mb-2">Email: {{ Auth::user()->email }}</p>
+                        <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Akun Terverifikasi</span>
+                    </div>
                     <div class="mt-4 pt-3 border-t border-slate-100">
                         <a href="{{ route('penyedia.profil') }}" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition">
                             Kelola Profil Organisasi &rarr;
                         </a>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </main>
 </body>

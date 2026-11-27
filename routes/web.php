@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LowonganController;
 
@@ -117,6 +118,21 @@ Route::middleware('auth')->group(function () {
             'user' => $user,
         ]);
     })->name('mahasiswa.lowongan_tersimpan');
-    
+
+    // M6: Riwayat Lamaran Mahasiswa (F-16, F-17, F-18)
+    Route::get('/mahasiswa/lamaran', function () {
+        $user = Auth::user();
+        if ($user->role !== 'mahasiswa') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ini khusus untuk peran mahasiswa.');
+        }
+
+        $token = $user->createToken('web-session-' . $user->id)->plainTextToken;
+
+        return view('mahasiswa.lamaran', [
+            'apiToken' => $token,
+            'user' => $user,
+        ]);
+    })->name('mahasiswa.lamaran');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -31,6 +31,7 @@ class UpdateMahasiswaProfileRequest extends FormRequest
             'keahlian'          => ['sometimes', 'nullable', 'string', 'max:1000'],
             'ketersediaan_waktu'=> ['sometimes', 'nullable', 'string', 'max:255'],
             'bio'               => ['sometimes', 'nullable', 'string', 'max:2000'],
+            'portfolio_url'     => ['sometimes', 'nullable', 'url', 'max:255']
         ];
     }
 
