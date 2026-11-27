@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->group(function () {
         // F-06: Hapus CV
         Route::delete('/profile/cv', [MahasiswaProfileController::class, 'deleteCv']);
 
+        // F-19 (PBI-19): Unggah / ganti & hapus Transkrip Nilai
+        Route::post('/profile/transkrip', [MahasiswaProfileController::class, 'uploadTranskrip']);
+        Route::delete('/profile/transkrip', [MahasiswaProfileController::class, 'deleteTranskrip']);
+
         // ─── Pencarian Lowongan (M5: F-13, F-14) ─────────────────
         Route::get('/lowongan', [LowonganController::class, 'index']);
         Route::get('/lowongan/categories', [LowonganController::class, 'categories']);

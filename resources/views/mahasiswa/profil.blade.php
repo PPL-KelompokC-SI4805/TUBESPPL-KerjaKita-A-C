@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Profil Mahasiswa & Kelola CV - KerjaKita</title>
+    <title>Profil Mahasiswa & Kelola Dokumen - KerjaKita</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -51,6 +51,9 @@
                         <a href="{{ route('mahasiswa.lowongan_tersimpan') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
                             Lowongan Tersimpan
                         </a>
+                        <a href="{{ route('mahasiswa.lamaran') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
+                            Riwayat Lamaran
+                        </a>
                         <a href="{{ route('mahasiswa.profil') }}" class="px-3 py-2 text-sm font-bold text-blue-600 border-b-2 border-blue-600 transition">
                             Profil Mahasiswa
                         </a>
@@ -80,13 +83,13 @@
         <div class="mb-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                 <div>
-                    <h1 class="text-2xl font-black text-slate-900 tracking-tight">Profil Mahasiswa & Kelola CV</h1>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola identitas diri, latar belakang pendidikan, keahlian, dan dokumen CV untuk keperluan melamar lowongan kerja.</p>
+                    <h1 class="text-2xl font-black text-slate-900 tracking-tight">Profil Mahasiswa &amp; Kelola Dokumen</h1>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Kelola identitas diri, latar belakang pendidikan, keahlian, CV, transkrip nilai, serta tautan portofolio Anda.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
                         <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                        Modul M2 (F-04, F-05, F-06)
+                        Modul M2 (F-04, F-05, F-06, F-19)
                     </span>
                 </div>
             </div>
@@ -108,7 +111,7 @@
         <div id="profileContent" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
             <!-- ============================================================== -->
-            <!-- PANEL KIRI: Data Diri & Akademik Mahasiswa (F-04 & F-05)     -->
+            <!-- PANEL KIRI: Data Diri, Akademik & Portofolio (F-04, F-05, F-19)-->
             <!-- ============================================================== -->
             <div class="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
                 
@@ -119,11 +122,11 @@
                             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            Data Pribadi & Akademik
+                            Data Pribadi, Akademik &amp; Portofolio
                         </h2>
                         <p class="text-xs text-slate-500 mt-0.5">Perbarui informasi profil Anda secara berkala agar penyedia lowongan dapat mengenali kualifikasi Anda.</p>
                     </div>
-                    <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">F-04 & F-05</span>
+                    <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">F-04, F-05 &amp; F-19</span>
                 </div>
 
                 <form id="profileForm" onsubmit="handleUpdateProfile(event)" class="space-y-6">
@@ -139,7 +142,7 @@
                                 </label>
                                 <input type="text" id="nama_lengkap" name="nama_lengkap" required
                                     class="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    placeholder="Contoh: Renjiro Athaya">
+                                    placeholder="Contoh: Ilham Ramadhan">
                                 <p class="text-[11px] text-red-500 mt-1 hidden" id="err_nama_lengkap"></p>
                             </div>
 
@@ -182,7 +185,7 @@
                                 <label class="block text-xs font-bold text-slate-700 mb-1">Nomor Induk Mahasiswa (NIM)</label>
                                 <input type="text" id="nim" name="nim"
                                     class="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    placeholder="Contoh: 102022400199">
+                                    placeholder="Contoh: 102022400320">
                                 <p class="text-[11px] text-red-500 mt-1 hidden" id="err_nim"></p>
                             </div>
 
@@ -200,7 +203,7 @@
                                 <label class="block text-xs font-bold text-slate-700 mb-1">Fakultas</label>
                                 <input type="text" id="fakultas" name="fakultas"
                                     class="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    placeholder="Contoh: Fakultas Informatika">
+                                    placeholder="Contoh: Fakultas Rekayasa Industri">
                                 <p class="text-[11px] text-red-500 mt-1 hidden" id="err_fakultas"></p>
                             </div>
 
@@ -209,7 +212,7 @@
                                 <label class="block text-xs font-bold text-slate-700 mb-1">Program Studi</label>
                                 <input type="text" id="program_studi" name="program_studi"
                                     class="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    placeholder="Contoh: S1 Informatika">
+                                    placeholder="Contoh: S1 Sistem Informasi">
                                 <p class="text-[11px] text-red-500 mt-1 hidden" id="err_program_studi"></p>
                             </div>
 
@@ -239,9 +242,9 @@
                         </div>
                     </div>
 
-                    <!-- Bagian 3: Kompetensi & Bio -->
+                    <!-- Bagian 3: Kompetensi, Bio & Portofolio -->
                     <div class="pt-2">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">3. Keahlian & Deskripsi Diri</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">3. Keahlian, Ringkasan Diri &amp; Portofolio</h3>
                         
                         <!-- Input Keahlian / Skill Tags -->
                         <div class="mb-4">
@@ -268,7 +271,7 @@
                         </div>
 
                         <!-- Bio / Ringkasan Diri -->
-                        <div>
+                        <div class="mb-4">
                             <div class="flex justify-between items-center mb-1">
                                 <label class="block text-xs font-bold text-slate-700">Bio / Ringkasan Profil</label>
                                 <span class="text-[10px] text-slate-400" id="bioCounter">0 / 2000 karakter</span>
@@ -278,6 +281,25 @@
                                 placeholder="Tuliskan deskripsi singkat mengenai minat karir, pengalaman proyek, dan motivasi kerja Anda..."
                                 oninput="updateBioCounter()"></textarea>
                             <p class="text-[11px] text-red-500 mt-1 hidden" id="err_bio"></p>
+                        </div>
+
+                        <!-- Link Portofolio Eksternal (PBI-19 / F-19) -->
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label for="portfolio_url" class="block text-xs font-bold text-slate-700">
+                                    Tautan Portofolio / GitHub / LinkedIn
+                                    <span class="text-[10px] text-indigo-600 font-semibold ml-1">(F-19)</span>
+                                </label>
+                                <a id="previewPortfolioLink" href="#" target="_blank" class="hidden text-[11px] font-bold text-blue-600 hover:underline">
+                                    Buka Tautan &nearr;
+                                </a>
+                            </div>
+                            <input type="url" id="portfolio_url" name="portfolio_url"
+                                class="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                placeholder="Contoh: https://github.com/username atau https://linkedin.com/in/username"
+                                oninput="togglePortfolioPreview()">
+                            <p class="text-[11px] text-slate-400 mt-1">Opsional. Gunakan format URL lengkap yang diawali dengan <code>https://</code>.</p>
+                            <p class="text-[11px] text-red-500 mt-1 hidden" id="err_portfolio_url"></p>
                         </div>
                     </div>
 
@@ -294,11 +316,11 @@
 
 
             <!-- ============================================================== -->
-            <!-- PANEL KANAN: Kelola Berkas CV PDF (F-06)                      -->
+            <!-- PANEL KANAN: Kelola CV (F-06) & Transkrip Nilai PDF (F-19)     -->
             <!-- ============================================================== -->
             <div class="lg:col-span-4 space-y-6">
 
-                <!-- Kartu Utama Kelola CV -->
+                <!-- Kartu 1: Kelola CV (F-06) -->
                 <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm">
                     <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
                         <div>
@@ -308,12 +330,12 @@
                                 </svg>
                                 Kelola CV (PDF)
                             </h2>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Berkas utama untuk melamar posisi magang & kerja.</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Berkas utama untuk melamar posisi magang &amp; kerja.</p>
                         </div>
                         <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">F-06</span>
                     </div>
 
-                    <!-- Input File Tersembunyi -->
+                    <!-- Input File CV Tersembunyi -->
                     <input type="file" id="cvFileInput" accept="application/pdf" class="hidden" onchange="handleCvFileSelected(event)">
 
                     <!-- Status 1: JIKA CV SUDAH TERSEDIA -->
@@ -328,14 +350,12 @@
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
-                                    CV Aktif & Siap Digunakan
+                                    CV Aktif &amp; Siap Digunakan
                                 </p>
                             </div>
                         </div>
 
-                        <!-- Tombol Aksi CV -->
                         <div class="grid grid-cols-1 gap-2 pt-1">
-                            <!-- Lihat CV -->
                             <a id="btnViewCv" href="#" target="_blank"
                                 class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-slate-200">
                                 <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -344,7 +364,6 @@
                                 Lihat CV (PDF)
                             </a>
 
-                            <!-- Ganti CV -->
                             <button type="button" onclick="triggerCvUpload()"
                                 class="w-full py-2.5 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-blue-200">
                                 <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -353,7 +372,6 @@
                                 Ganti Berkas CV
                             </button>
 
-                            <!-- Hapus CV -->
                             <button type="button" onclick="openDeleteCvModal()"
                                 class="w-full py-2 px-4 text-red-600 hover:bg-red-50 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -364,7 +382,7 @@
                         </div>
                     </div>
 
-                    <!-- Status 2: JIKA CV BELUM DIUNGGAH (Dropzone) -->
+                    <!-- Status 2: JIKA CV BELUM DIUNGGAH -->
                     <div id="cvEmptyState" class="space-y-4">
                         <div onclick="triggerCvUpload()"
                             class="border-2 border-dashed border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/50 rounded-2xl p-6 text-center cursor-pointer transition group">
@@ -381,32 +399,121 @@
                         </div>
                     </div>
 
-                    <!-- Status Uploading Progress Spinner -->
+                    <!-- Status Uploading CV -->
                     <div id="cvUploadingState" class="hidden p-6 text-center space-y-3">
                         <div class="inline-block w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                         <p class="text-xs font-bold text-slate-800" id="cvUploadStatusText">Mengunggah file CV...</p>
                         <p class="text-[10px] text-slate-500">Mohon tunggu sebentar, file sedang diverifikasi oleh sistem.</p>
                     </div>
 
-                    <!-- Validasi Info Bawah -->
                     <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
                         <span>Format: <strong>PDF</strong></span>
                         <span>Maksimal: <strong>2 MB</strong></span>
                     </div>
                 </div>
 
-                <!-- Card Panduan CV -->
+                <!-- Kartu 2: Kelola Transkrip Nilai PDF (PBI-19 / F-19) -->
+                <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Transkrip Nilai (PDF)
+                            </h2>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Dokumen akademik pendukung (KHS / Transkrip sementara).</p>
+                        </div>
+                        <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700">F-19</span>
+                    </div>
+
+                    <!-- Input File Transkrip Tersembunyi -->
+                    <input type="file" id="transkripFileInput" accept="application/pdf" class="hidden" onchange="handleTranskripFileSelected(event)">
+
+                    <!-- Status 1: Transkrip Aktif -->
+                    <div id="transkripActiveState" class="hidden space-y-4">
+                        <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-sm">
+                                PDF
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold text-slate-800 truncate" id="transkripFileNameDisplay">transkrip_nilai.pdf</p>
+                                <p class="text-[10px] text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Transkrip Terunggah &amp; Aktif
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2 pt-1">
+                            <a id="btnViewTranskrip" href="#" target="_blank"
+                                class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-slate-200">
+                                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                Lihat Transkrip (PDF)
+                            </a>
+                            <button type="button" onclick="triggerTranskripUpload()"
+                                class="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-indigo-200">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                                Ganti Berkas Transkrip
+                            </button>
+                            <button type="button" onclick="openDeleteTranskripModal()"
+                                class="w-full py-2 px-4 text-red-600 hover:bg-red-50 font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Hapus Transkrip
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status 2: Transkrip Belum Diunggah -->
+                    <div id="transkripEmptyState" class="space-y-4">
+                        <div onclick="triggerTranskripUpload()"
+                            class="border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50 hover:bg-indigo-50/40 rounded-2xl p-6 text-center cursor-pointer transition group">
+                            <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 group-hover:border-indigo-300 flex items-center justify-center mx-auto mb-3 text-indigo-600 shadow-sm transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </div>
+                            <p class="text-xs font-bold text-slate-800">Unggah Transkrip Nilai</p>
+                            <p class="text-[11px] text-slate-500 mt-1">Opsional — memperkuat verifikasi IPK &amp; mata kuliah yang telah ditempuh.</p>
+                            <span class="inline-block mt-3 px-3 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-indigo-600 shadow-2xs">
+                                Pilih File PDF
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Status Uploading Transkrip -->
+                    <div id="transkripUploadingState" class="hidden p-6 text-center space-y-3">
+                        <div class="inline-block w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="text-xs font-bold text-slate-800">Mengunggah Transkrip Nilai...</p>
+                        <p class="text-[10px] text-slate-500">Mohon tunggu sebentar, file sedang diverifikasi oleh sistem.</p>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                        <span>Format: <strong>PDF</strong></span>
+                        <span>Maksimal: <strong>2 MB</strong></span>
+                    </div>
+                </div>
+
+                <!-- Card Panduan Dokumen -->
                 <div class="bg-blue-50/70 border border-blue-100 rounded-3xl p-5 text-xs text-blue-900">
                     <p class="font-bold flex items-center gap-1.5 mb-1.5 text-blue-800">
                         <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Tips CV untuk Mahasiswa
+                        Tips Dokumen untuk Mahasiswa
                     </p>
                     <ul class="list-disc list-inside space-y-1 text-[11px] text-blue-800/90">
-                        <li>Cantumkan pengalaman kepanitiaan, organisasi, atau proyek perkuliahan yang relevan.</li>
-                        <li>Pastikan nomor kontak dan alamat email aktif.</li>
-                        <li>Saat melamar, CV ini akan disalin sebagai <em>snapshot</em> arsip.</li>
+                        <li>Cantumkan pengalaman kepanitiaan, organisasi, atau proyek perkuliahan yang relevan pada CV.</li>
+                        <li>Sertakan tautan GitHub, LinkedIn, atau portofolio karya untuk meningkatkan nilai tambah di mata mitra.</li>
+                        <li>Saat melamar, CV Anda akan disalin sebagai <em>snapshot</em> arsip.</li>
                     </ul>
                 </div>
             </div>
@@ -441,19 +548,46 @@
         </div>
     </div>
 
+    <!-- ============================================================== -->
+    <!-- MODAL KONFIRMASI HAPUS TRANSKRIP NILAI (PBI-19 / F-19)         -->
+    <!-- ============================================================== -->
+    <div id="deleteTranskripModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 transform transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 text-center mb-1">Hapus Transkrip Nilai?</h3>
+            <p class="text-xs text-slate-500 text-center mb-6">
+                Apakah Anda yakin ingin menghapus berkas Transkrip Nilai ini dari profil Anda? Anda dapat mengunggahnya kembali kapan saja.
+            </p>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="closeDeleteTranskripModal()"
+                    class="w-1/2 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                    Batal
+                </button>
+                <button type="button" id="btnConfirmDeleteTranskrip" onclick="handleDeleteTranskripConfirm()"
+                    class="w-1/2 py-2.5 px-4 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                    <span id="deleteTranskripSpinner" class="spinner hidden"></span>
+                    <span id="deleteTranskripBtnText">Ya, Hapus</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ============================================================== -->
-    <!-- LOGIKA JAVASCRIPT & INTEGRASI API AXIOS (F-04, F-05, F-06)     -->
+    <!-- LOGIKA JAVASCRIPT & INTEGRASI API AXIOS (F-04, F-05, F-06, F-19)-->
     <!-- ============================================================== -->
     <script>
-        // Setup API Endpoint & Bearer Token
         const API_PROFILE = '/api/mahasiswa/profile';
         const API_CV = '/api/mahasiswa/profile/cv';
+        const API_TRANSKRIP = '/api/mahasiswa/profile/transkrip';
         
         let userSkills = [];
         let currentProfileData = null;
 
-        // Inisialisasi Axios Client dengan Auth Header
         function getApiClient() {
             const token = window.AUTH_TOKEN || localStorage.getItem('auth_token') || '';
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -480,6 +614,7 @@
                     currentProfileData = response.data.data;
                     populateProfileForm(currentProfileData);
                     renderCvSection(currentProfileData);
+                    renderTranskripSection(currentProfileData);
                 } else {
                     showAlert('Gagal memuat profil mahasiswa.', 'error');
                 }
@@ -493,7 +628,6 @@
             }
         }
 
-        // Isi form dengan data profil
         function populateProfileForm(data) {
             document.getElementById('user_email').value = data.email || '';
             document.getElementById('nama_lengkap').value = data.nama_lengkap || '';
@@ -506,12 +640,12 @@
             document.getElementById('domisili').value = data.domisili || '';
             document.getElementById('ketersediaan_waktu').value = data.ketersediaan_waktu || '';
             document.getElementById('bio').value = data.bio || '';
+            document.getElementById('portfolio_url').value = data.portfolio_url || '';
 
             if (data.nama_lengkap) {
                 document.getElementById('navUserName').innerText = data.nama_lengkap;
             }
 
-            // Inisialisasi Skill Tags
             if (data.keahlian) {
                 userSkills = data.keahlian.split(',')
                     .map(s => s.trim())
@@ -521,9 +655,9 @@
             }
             renderSkillsBadges();
             updateBioCounter();
+            togglePortfolioPreview();
         }
 
-        // Tampilkan State CV Aktif atau Kosong
         function renderCvSection(data) {
             const activeState = document.getElementById('cvActiveState');
             const emptyState = document.getElementById('cvEmptyState');
@@ -534,12 +668,9 @@
                 emptyState.classList.add('hidden');
                 activeState.classList.remove('hidden');
 
-                // Set tautan tombol lihat CV
                 const btnViewCv = document.getElementById('btnViewCv');
-                const cvUrl = data.cv_url || `/storage/${data.cv_file_path}`;
-                btnViewCv.href = cvUrl;
+                btnViewCv.href = data.cv_url || `/storage/${data.cv_file_path}`;
 
-                // Tampilkan nama file
                 const fileName = data.cv_file_path.split('/').pop();
                 document.getElementById('cvFileNameDisplay').innerText = fileName;
             } else {
@@ -548,8 +679,29 @@
             }
         }
 
+        function renderTranskripSection(data) {
+            const activeState = document.getElementById('transkripActiveState');
+            const emptyState = document.getElementById('transkripEmptyState');
+            const uploadingState = document.getElementById('transkripUploadingState');
+            uploadingState.classList.add('hidden');
+
+            if (data.transkrip_file_path) {
+                emptyState.classList.add('hidden');
+                activeState.classList.remove('hidden');
+
+                const btnViewTranskrip = document.getElementById('btnViewTranskrip');
+                btnViewTranskrip.href = data.transkrip_url || `/storage/${data.transkrip_file_path}`;
+
+                const fileName = data.transkrip_file_path.split('/').pop();
+                document.getElementById('transkripFileNameDisplay').innerText = fileName;
+            } else {
+                activeState.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            }
+        }
+
         // ==============================================================
-        // 2. F-05: Mengubah Data Profil (PUT /api/mahasiswa/profile)
+        // 2. F-05 & F-19: Mengubah Data Profil & Link Portofolio
         // ==============================================================
         async function handleUpdateProfile(event) {
             event.preventDefault();
@@ -559,7 +711,6 @@
             const spinner = document.getElementById('saveSpinner');
             const btnText = document.getElementById('saveBtnText');
 
-            // Format keahlian dari tag badges
             const keahlianStr = userSkills.join(', ');
 
             const payload = {
@@ -573,10 +724,10 @@
                 domisili: document.getElementById('domisili').value.trim() || null,
                 ketersediaan_waktu: document.getElementById('ketersediaan_waktu').value.trim() || null,
                 keahlian: keahlianStr || null,
-                bio: document.getElementById('bio').value.trim() || null
+                bio: document.getElementById('bio').value.trim() || null,
+                portfolio_url: document.getElementById('portfolio_url').value.trim() || null
             };
 
-            // Loading state
             btn.disabled = true;
             spinner.classList.remove('hidden');
             btnText.innerText = 'Menyimpan...';
@@ -586,8 +737,9 @@
                 const response = await api.put(API_PROFILE, payload);
 
                 if (response.data && response.data.success) {
-                    showAlert('Profil mahasiswa berhasil diperbarui!', 'success');
+                    showAlert('Profil mahasiswa & tautan portofolio berhasil diperbarui!', 'success');
                     currentProfileData = response.data.data;
+                    togglePortfolioPreview();
                     if (payload.nama_lengkap) {
                         document.getElementById('navUserName').innerText = payload.nama_lengkap;
                     }
@@ -612,7 +764,7 @@
         }
 
         // ==============================================================
-        // 3. F-06: Mengunggah Berkas CV (POST /api/mahasiswa/profile/cv)
+        // 3. F-06: Unggah & Hapus Berkas CV
         // ==============================================================
         function triggerCvUpload() {
             document.getElementById('cvFileInput').click();
@@ -624,26 +776,21 @@
 
             const file = fileInput.files[0];
 
-            // Validasi Sisi Klien 1: Format File Wajib PDF
             if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
                 showAlert('Format file tidak valid. CV wajib berformat PDF (.pdf).', 'error');
                 fileInput.value = '';
                 return;
             }
 
-            // Validasi Sisi Klien 2: Ukuran Maksimal 2 MB (2048 KB)
-            const maxBytes = 2 * 1024 * 1024;
-            if (file.size > maxBytes) {
+            if (file.size > 2 * 1024 * 1024) {
                 showAlert('Ukuran file melebihi batas 2 MB. Silakan unggah file PDF yang lebih kecil.', 'error');
                 fileInput.value = '';
                 return;
             }
 
-            // Siapkan FormData
             const formData = new FormData();
             formData.append('cv', file);
 
-            // Tampilkan status uploading
             document.getElementById('cvEmptyState').classList.add('hidden');
             document.getElementById('cvActiveState').classList.add('hidden');
             document.getElementById('cvUploadingState').classList.remove('hidden');
@@ -675,9 +822,6 @@
             }
         }
 
-        // ==============================================================
-        // 4. F-06: Menghapus Berkas CV (DELETE /api/mahasiswa/profile/cv)
-        // ==============================================================
         function openDeleteCvModal() {
             document.getElementById('deleteCvModal').classList.remove('hidden');
         }
@@ -722,8 +866,121 @@
         }
 
         // ==============================================================
-        // Helper: Skill Tags & Bio Counter
+        // 4. F-19 (PBI-19): Unggah & Hapus Berkas Transkrip Nilai PDF
         // ==============================================================
+        function triggerTranskripUpload() {
+            document.getElementById('transkripFileInput').click();
+        }
+
+        async function handleTranskripFileSelected(event) {
+            const fileInput = event.target;
+            if (!fileInput.files || fileInput.files.length === 0) return;
+
+            const file = fileInput.files[0];
+
+            if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+                showAlert('Format file tidak valid. Transkrip Nilai wajib berformat PDF (.pdf).', 'error');
+                fileInput.value = '';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                showAlert('Ukuran file transkrip melebihi batas maksimal 2 MB.', 'error');
+                fileInput.value = '';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('transkrip', file);
+
+            document.getElementById('transkripEmptyState').classList.add('hidden');
+            document.getElementById('transkripActiveState').classList.add('hidden');
+            document.getElementById('transkripUploadingState').classList.remove('hidden');
+
+            try {
+                const api = getApiClient();
+                const response = await api.post(API_TRANSKRIP, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+
+                if (response.data && response.data.success) {
+                    showAlert('File Transkrip Nilai berhasil diunggah!', 'success');
+                    if (currentProfileData) {
+                        currentProfileData.transkrip_file_path = response.data.data.transkrip_file_path;
+                        currentProfileData.transkrip_url = response.data.data.transkrip_url;
+                    }
+                    renderTranskripSection(response.data.data);
+                } else {
+                    showAlert('Gagal mengunggah file Transkrip Nilai.', 'error');
+                    renderTranskripSection(currentProfileData || {});
+                }
+            } catch (error) {
+                console.error('Upload Transkrip error:', error);
+                const errMsg = error.response?.data?.message || 'Terjadi kesalahan saat mengunggah transkrip.';
+                showAlert(errMsg, 'error');
+                renderTranskripSection(currentProfileData || {});
+            } finally {
+                fileInput.value = '';
+            }
+        }
+
+        function openDeleteTranskripModal() {
+            document.getElementById('deleteTranskripModal').classList.remove('hidden');
+        }
+
+        function closeDeleteTranskripModal() {
+            document.getElementById('deleteTranskripModal').classList.add('hidden');
+        }
+
+        async function handleDeleteTranskripConfirm() {
+            const btn = document.getElementById('btnConfirmDeleteTranskrip');
+            const spinner = document.getElementById('deleteTranskripSpinner');
+            const btnText = document.getElementById('deleteTranskripBtnText');
+
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.innerText = 'Menghapus...';
+
+            try {
+                const api = getApiClient();
+                const response = await api.delete(API_TRANSKRIP);
+
+                if (response.data && response.data.success) {
+                    showAlert('File Transkrip Nilai berhasil dihapus dari sistem.', 'success');
+                    if (currentProfileData) {
+                        currentProfileData.transkrip_file_path = null;
+                        currentProfileData.transkrip_url = null;
+                    }
+                    renderTranskripSection({});
+                    closeDeleteTranskripModal();
+                } else {
+                    showAlert('Gagal menghapus file Transkrip Nilai.', 'error');
+                }
+            } catch (error) {
+                console.error('Delete Transkrip error:', error);
+                const errMsg = error.response?.data?.message || 'Terjadi kesalahan saat menghapus transkrip.';
+                showAlert(errMsg, 'error');
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.innerText = 'Ya, Hapus';
+            }
+        }
+
+        // ==============================================================
+        // Helper: Skill Tags, Bio Counter & Portfolio Link Preview
+        // ==============================================================
+        function togglePortfolioPreview() {
+            const val = document.getElementById('portfolio_url').value.trim();
+            const linkEl = document.getElementById('previewPortfolioLink');
+            if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+                linkEl.href = val;
+                linkEl.classList.remove('hidden');
+            } else {
+                linkEl.classList.add('hidden');
+            }
+        }
+
         function renderSkillsBadges() {
             const container = document.getElementById('skillsBadgeContainer');
             container.innerHTML = '';
@@ -829,7 +1086,6 @@
             }
         }
 
-        // Jalankan fetch saat DOM siap
         document.addEventListener('DOMContentLoaded', fetchProfileData);
     </script>
 </body>

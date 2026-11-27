@@ -55,8 +55,8 @@
                         <a href="{{ route('mahasiswa.lowongan_tersimpan') }}" class="px-3 py-2 text-sm font-bold text-blue-600 border-b-2 border-blue-600 transition flex items-center gap-1.5">
                             Lowongan Tersimpan
                         </a>
-                        <a href="#" onclick="showNotice('Fitur Riwayat Lamaran sedang dalam tahap integrasi modul M6.')" class="px-3 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 transition">
-                            Riwayat Lamaran
+                        <a href="{{ route('mahasiswa.lamaran') }}" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition py-5">
+                        Riwayat Lamaran
                         </a>
                         <a href="{{ route('mahasiswa.profil') }}" class="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
                             Profil Mahasiswa

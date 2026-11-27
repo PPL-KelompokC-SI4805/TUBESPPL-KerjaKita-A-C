@@ -99,4 +99,43 @@ class MahasiswaProfileService
 
         return $profile->fresh();
     }
+
+    /**
+     * Unggah atau ganti file Transkrip Nilai PDF (PBI-19 / F-19).
+     */
+    public function uploadTranskrip(User $user, UploadedFile $file): array
+    {
+        $profile = $this->getProfile($user);
+
+        if ($profile->transkrip_file_path) {
+            Storage::disk('public')->delete($profile->transkrip_file_path);
+        }
+
+        $filename = 'transkrip_' . $user->id . '_' . time() . '.pdf';
+        $path = $file->storeAs('transkrip', $filename, 'public');
+
+        $profile->update(['transkrip_file_path' => $path]);
+
+        return [
+            'profile'       => $profile->fresh(),
+            'transkrip_url' => Storage::disk('public')->url($path),
+        ];
+    }
+
+    /**
+     * Hapus file Transkrip Nilai dari storage (PBI-19 / F-19).
+     */
+    public function deleteTranskrip(User $user): MahasiswaProfile
+    {
+        $profile = $this->getProfile($user);
+
+        if (!$profile->transkrip_file_path) {
+            throw new \Exception('Anda belum memiliki file Transkrip Nilai yang dapat dihapus.');
+        }
+
+        Storage::disk('public')->delete($profile->transkrip_file_path);
+        $profile->update(['transkrip_file_path' => null]);
+
+        return $profile->fresh();
+    }
 }
